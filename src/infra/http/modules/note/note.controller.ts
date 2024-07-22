@@ -36,8 +36,7 @@ export class NoteController {
   async createNote(@Body() createNoteDto: CreateNoteDto,
   @Req() req: AuthRequestModel,
 ) {
-  const user = req.user; // Acessa as informações do usuário
-  console.log('User Info:', user); // Exemplo: exibe informações do usuário
+  const user = req.user;
     const note = await this.createNoteUseCase.execute(createNoteDto, user.email);
     return NoteViewModel.toHttp(note);
   }

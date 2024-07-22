@@ -20,7 +20,7 @@ export class CreateNoteUseCase {
 
     await this.noteRepository.create(note);
 
-    // sendEmail(note.title, email); 
+    sendEmail(note.title, email); 
 
     return note;
   }
