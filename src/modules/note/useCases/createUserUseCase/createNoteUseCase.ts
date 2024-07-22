@@ -12,7 +12,7 @@ interface CreateNoteRequest {
 export class CreateNoteUseCase {
   constructor(private noteRepository: NoteRepository) {}
 
-  async execute({ title, content }: CreateNoteRequest) {
+  async execute({ title, content }: CreateNoteRequest, email: string) {
     const note = new Note({
       title,
       content,
@@ -20,7 +20,7 @@ export class CreateNoteUseCase {
 
     await this.noteRepository.create(note);
 
-    sendEmail(note.title); 
+    // sendEmail(note.title, email); 
 
     return note;
   }

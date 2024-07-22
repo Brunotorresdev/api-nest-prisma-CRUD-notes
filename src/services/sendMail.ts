@@ -1,7 +1,7 @@
 import { env } from 'src/env';
 const { MailtrapClient } = require('mailtrap');
 
-export const sendEmail = (titleNote) => {
+export const sendEmail = (titleNote: string, email: string) => {
   const client = new MailtrapClient({
     endpoint: env.MAIL_ENDPOINT,
     token: env.MAIL_TOKEN,
@@ -13,7 +13,7 @@ export const sendEmail = (titleNote) => {
   };
   const recipients = [
     {
-      email: env.EMAIL_TO,
+      email: email,
     },
   ];
 

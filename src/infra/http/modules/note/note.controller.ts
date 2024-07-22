@@ -8,6 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  Req
 } from '@nestjs/common';
 import { CreateNoteUseCase } from 'src/modules/note/useCases/createUserUseCase/createNoteUseCase';
 import { NoteViewModel } from './viewModel/noteViewModel';
@@ -17,6 +18,7 @@ import { GetNoteUseCase } from 'src/modules/note/useCases/createUserUseCase/getN
 import { UpdateNoteUseCase } from 'src/modules/note/useCases/createUserUseCase/updateNoteUseCase';
 import { DeleteNoteUseCase } from 'src/modules/note/useCases/createUserUseCase/deleteNoteUseCase';
 import { CreateNoteDto, UpdateNoteDto } from './dtos/note.dto';
+import { AuthRequestModel } from '../auth/models/authRequestModel';
 
 @ApiTags('note')
 @Controller('notes')
@@ -31,8 +33,12 @@ export class NoteController {
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  async createNote(@Body() createNoteDto: CreateNoteDto) {
-    const note = await this.createNoteUseCase.execute(createNoteDto);
+  async createNote(@Body() createNoteDto: CreateNoteDto,
+  @Req() req: AuthRequestModel,
+) {
+  const user = req.user; // Acessa as informações do usuário
+  console.log('User Info:', user); // Exemplo: exibe informações do usuário
+    const note = await this.createNoteUseCase.execute(createNoteDto, user.email);
     return NoteViewModel.toHttp(note);
   }
 
